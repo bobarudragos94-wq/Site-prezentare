@@ -1,0 +1,230 @@
+@import "tailwindcss";
+
+/*
+  Culorile și literele site-ului.
+  Accentul se schimbă dintr-un singur loc: --color-accent.
+*/
+@theme {
+  --color-night: #0e0e0c; /* fundal închis */
+  --color-panel: #191916; /* carduri pe fundal închis */
+  --color-edge: #2e2d27; /* linii pe fundal închis */
+  --color-mute: #a9a79d; /* text secundar pe fundal închis */
+  --color-paper: #f4f2ec; /* fundal deschis */
+  --color-sheet: #fffdf8; /* carduri pe fundal deschis */
+  --color-rule: #d9d5ca; /* linii pe fundal deschis */
+  --color-ink: #11110f; /* text pe fundal deschis și pe accent */
+  --color-graphite: #55534a; /* text secundar pe fundal deschis */
+  --color-accent: #ffd600; /* singurul accent */
+
+  --font-display: var(--font-archivo), "Arial Black", Arial, sans-serif;
+  --font-sans: var(--font-figtree), "Helvetica Neue", Arial, sans-serif;
+
+  --animate-marquee: marquee 32s linear infinite;
+  --animate-typing: typing 1s ease-in-out infinite;
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes typing {
+    0%,
+    60%,
+    100% {
+      transform: translateY(0);
+      opacity: 0.45;
+    }
+    30% {
+      transform: translateY(-3px);
+      opacity: 1;
+    }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--color-night);
+    color: var(--color-paper);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+  }
+  section[id],
+  [data-anchor] {
+    scroll-margin-top: 1.5rem;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-paper);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 7px var(--color-ink);
+  }
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-ink);
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+}
+
+@layer components {
+  /* Titlurile: Archivo gros, ușor lățit, strâns. */
+  .display {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-stretch: 106%;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    text-wrap: balance;
+  }
+  .eyebrow {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .wrap {
+    width: 100%;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .wrap {
+      padding-inline: 2.5rem;
+    }
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 3.5rem;
+    padding: 0 1.75rem;
+    border-radius: 999px;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.0625rem;
+    letter-spacing: -0.01em;
+    transition:
+      transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+      background-color 0.25s,
+      color 0.25s,
+      border-color 0.25s;
+  }
+  .btn:active {
+    transform: scale(0.97);
+  }
+  .btn-accent {
+    background: var(--color-accent);
+    color: var(--color-ink);
+  }
+  .btn-ink {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+  .btn-ghost {
+    border: 1.5px solid var(--color-edge);
+    color: var(--color-paper);
+  }
+  @media (hover: hover) {
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+    .btn-accent:hover {
+      background: var(--color-paper);
+    }
+    .btn-ink:hover {
+      background: var(--color-graphite);
+    }
+    .btn-ghost:hover {
+      border-color: var(--color-accent);
+      color: var(--color-accent);
+    }
+    .lift {
+      transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .lift:hover {
+      transform: translateY(-6px);
+    }
+  }
+  .btn .arrow {
+    transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .btn:hover .arrow {
+    transform: translateX(4px);
+  }
+
+  /* Cursoarele din calculator */
+  .slider {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 100%;
+    height: 2.75rem;
+    background: transparent;
+    cursor: pointer;
+  }
+  .slider::-webkit-slider-runnable-track {
+    height: 6px;
+    border-radius: 999px;
+    background: linear-gradient(
+      to right,
+      var(--color-ink) var(--fill, 50%),
+      rgb(17 17 15 / 0.22) var(--fill, 50%)
+    );
+  }
+  .slider::-moz-range-track {
+    height: 6px;
+    border-radius: 999px;
+    background: rgb(17 17 15 / 0.22);
+  }
+  .slider::-moz-range-progress {
+    height: 6px;
+    border-radius: 999px;
+    background: var(--color-ink);
+  }
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 2rem;
+    height: 2rem;
+    margin-top: calc(3px - 1rem);
+    border-radius: 50%;
+    background: var(--color-ink);
+    border: 4px solid var(--color-accent);
+    box-shadow: 0 0 0 2px var(--color-ink);
+    transition: transform 0.2s;
+  }
+  .slider::-moz-range-thumb {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background: var(--color-ink);
+    border: 4px solid var(--color-accent);
+    box-shadow: 0 0 0 2px var(--color-ink);
+  }
+  .slider:active::-webkit-slider-thumb {
+    transform: scale(1.15);
+  }
+}
+
+/* Fără mișcare pentru cine a cerut asta din setările telefonului. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .marquee-track {
+    animation: none !important;
+    transform: none !important;
+  }
+}
